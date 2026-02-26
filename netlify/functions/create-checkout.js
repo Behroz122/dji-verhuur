@@ -60,8 +60,8 @@ exports.handler = async (event) => {
           quantity: parseInt(hours),
         },
       ],
-      success_url: `${process.env.URL || 'https://djikicknverhuur.netlify.app'}?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.URL || 'https://djikicknverhuur.netlify.app'}?cancelled=true`,
+      success_url: `${process.env.URL || 'https://kickndji.netlify.app'}?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.URL || 'https://kickndji.netlify.app'}?cancelled=true`,
     });
 
     return {
