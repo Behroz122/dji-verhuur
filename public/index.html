@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJI OSMO Pocket 3 Verhuur — Kick'n Danschool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface-hover: #1a1a24;
+    --border: #2a2a3a;
+    --border-focus: #ff6b35;
+    --accent: #ff6b35;
+    --accent-glow: rgba(255, 107, 53, 0.15);
+    --accent-hover: #ff8555;
+    --text: #e8e8ed;
+    --text-muted: #8888a0;
+    --text-dim: #55556a;
+    --success: #22c55e;
+    --error: #ef4444;
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255, 107, 53, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .header-badge svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .header h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 6vw, 38px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header h1 span {
+    background: linear-gradient(135deg, var(--accent) 0%, #ff9966 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* Product info card */
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 32px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .product-image {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, #1a1a2e, #2a2a44);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .product-image svg {
+    width: 40px;
+    height: 40px;
+    color: var(--accent);
+  }
+
+  .product-info h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .product-info .prices {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .price-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .price-tag.docent {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .price-tag.leerling {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+
+  /* Form sections */
+  .form-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+
+  .form-section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .form-section-title .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Form fields */
+  .field {
+    margin-bottom: 16px;
+  }
+
+  .field:last-child {
+    margin-bottom: 0;
+  }
+
+  .field label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .field label .optional {
+    color: var(--text-dim);
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="tel"],
+  .field input[type="date"],
+  .field input[type="number"],
+  .field select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .field input:focus,
+  .field select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  .field input::placeholder {
+    color: var(--text-dim);
+  }
+
+  /* Role selector */
+  .role-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .role-option {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .role-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .role-option .role-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .role-option input:checked + .role-card {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  .role-option .role-card:hover {
+    border-color: var(--text-dim);
+  }
+
+  .role-option input:checked + .role-card:hover {
+    border-color: var(--accent);
+  }
+
+  .role-icon {
+    font-size: 28px;
+  }
+
+  .role-label {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .role-price {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Calendar embed area */
+  .calendar-wrapper {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .calendar-placeholder {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  .calendar-placeholder svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    color: var(--text-dim);
+  }
+
+  .calendar-placeholder p {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .calendar-placeholder a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .calendar-placeholder a:hover {
+    text-decoration: underline;
+  }
+
+  /* Time slot fields */
+  .time-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    .time-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Summary card */
+  .summary-card {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 107, 53, 0.02));
+    border: 1px solid rgba(255, 107, 53, 0.15);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-top: 16px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 14px;
+  }
+
+  .summary-row .label {
+    color: var(--text-muted);
+  }
+
+  .summary-row.total {
+    border-top: 1px solid rgba(255, 107, 53, 0.15);
+    margin-top: 8px;
+    padding-top: 12px;
+  }
+
+  .summary-row.total .value {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* Checkbox */
+  .checkbox-field {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+
+  .checkbox-field input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    cursor: pointer;
+    position: relative;
+    top: 2px;
+    transition: all 0.2s;
+  }
+
+  .checkbox-field input[type="checkbox"]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .checkbox-field input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .checkbox-field .checkbox-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .checkbox-field .checkbox-text strong {
+    color: var(--text);
+  }
+
+  /* Submit button */
+  .submit-btn {
+    width: 100%;
+    padding: 16px 32px;
+    border: none;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--accent), #ff8855);
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Success state */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 15, 0.95);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .success-overlay.visible {
+    display: flex;
+  }
+
+  .success-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px 32px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    animation: slideUp 0.4s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.1);
+    border: 2px solid rgba(34, 197, 94, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+  }
+
+  .success-box h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .success-box p {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* Error styling */
+  .field-error {
+    border-color: var(--error) !important;
+  }
+
+  .error-text {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0 16px;
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  .footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      Kick'n Danschool
+    </div>
+    <h1>DJI OSMO Pocket 3<br><span>Verhuur</span></h1>
+    <p>Huur onze camera voor professionele dansvideo's. Vul het formulier in en reserveer direct.</p>
+  </div>
+
+  <!-- Product card -->
+  <div class="product-card">
+    <div class="product-image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="9" r="3"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+    </div>
+    <div class="product-info">
+      <h3>DJI OSMO Pocket 3</h3>
+      <p style="font-size: 13px; color: var(--text-muted);">4K stabilized camera</p>
+      <div class="prices">
+        <span class="price-tag docent">Docent €10/uur</span>
+        <span class="price-tag leerling">Leerling €15/uur</span>
+      </div>
+    </div>
+  </div>
+
+  <form id="rentalForm" novalidate>
+    <!-- Section 1: Personal info -->
+    <div class="form-section">
+      <div class="form-section-title">
+        <span class="step-num">1</span> Persoonlijke gegevens
+      </div>
+
+      <div class="field">
+        <label for="fullName">Volledige naam</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Bijv. Jan de Vries" required>
+        <div class="error-text" id="fullNameError">Vul je volledige naam in</div>
+      </div>
+
+      <div class="field">
+        <label for="email">E-mailadres</label>
+        <input type="email" id="email" name="email" placeholder="jan@voorbeeld.nl" required>
+        <div class="error-text" id="emailError">Vul een geldig e-mailadres in</div>
+      </div>
+
+      <div class="field">
+        <label for="phone">Telefoonnummer <span class="optional">(optioneel)</span></label>
+        <input type="tel" id="phone" name="phone" placeholder="06-12345678">
+      </div>
+    </div>
+
+    <!-- Section 2: Role -->
+    <div class="form-section">
+      <div class="form-section-title">
+        <span class="step-num">2</span> Ik ben een...
+      </div>
+
+      <div class="role-selector">
+        <label class="role-option">
+          <input type="radio" name="role" value="docent" required>
+          <div class="role-card">
+            <span class="role-icon">🎓</span>
+            <span class="role-label">Docent</span>
+            <span class="role-price">€10,— per uur</span>
+          </div>
+        </label>
+        <label class="role-option">
+          <input type="radio" name="role" value="leerling">
+          <div class="role-card">
+            <span class="role-icon">💃</span>
+            <span class="role-label">Leerling</span>
+            <span class="role-price">€15,— per uur</span>
+          </div>
+        </label>
+      </div>
+      <div class="error-text" id="roleError" style="text-align:center;">Selecteer je rol</div>
+    </div>
+
+    <!-- Section 3: Calendar & Booking -->
+    <div class="form-section">
+      <div class="form-section-title">
+        <span class="step-num">3</span> Datum & tijd kiezen
+      </div>
+
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+        Bekijk hieronder de beschikbaarheid en kies je gewenste datum en tijdslot.
+      </p>
+
+      <!-- Google Calendar embed -->
+      <div class="calendar-wrapper">
+        <div class="calendar-placeholder" id="calendarArea">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+          <p><strong>Google Agenda — Beschikbaarheid</strong></p>
+          <p style="font-size:12px; margin-bottom: 12px;">Hier wordt de agenda ingeladen zodra je de agenda-ID instelt.<br>Rode blokken = al gereserveerd.</p>
+          <!-- INSTRUCTIE: Vervang JOUW_AGENDA_ID hieronder met je echte Google Calendar ID -->
+          <iframe id="calendarIframe" src="" width="100%" height="400" frameborder="0" style="display:none; border-radius: 8px;"></iframe>
+          <a href="#" id="calendarLink" target="_blank">↗ Open agenda in nieuw venster</a>
+        </div>
+      </div>
+
+      <div class="time-row">
+        <div class="field">
+          <label for="bookingDate">Datum</label>
+          <input type="date" id="bookingDate" name="bookingDate" required>
+          <div class="error-text" id="dateError">Kies een datum</div>
+        </div>
+        <div class="field">
+          <label for="startTime">Starttijd</label>
+          <select id="startTime" name="startTime" required>
+            <option value="">Kies...</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+            <option value="18:00">18:00</option>
+            <option value="19:00">19:00</option>
+            <option value="20:00">20:00</option>
+            <option value="21:00">21:00</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="hours">Aantal uur</label>
+          <select id="hours" name="hours" required>
+            <option value="">Kies...</option>
+            <option value="1">1 uur</option>
+            <option value="2">2 uur</option>
+            <option value="3">3 uur</option>
+            <option value="4">4 uur</option>
+            <option value="5">5 uur</option>
+            <option value="6">6 uur</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Summary & Payment -->
+    <div class="form-section">
+      <div class="form-section-title">
+        <span class="step-num">4</span> Overzicht & betaling
+      </div>
+
+      <div class="summary-card" id="summaryCard" style="display:none;">
+        <div class="summary-row">
+          <span class="label">Rol</span>
+          <span class="value" id="summaryRole">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Datum</span>
+          <span class="value" id="summaryDate">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Tijd</span>
+          <span class="value" id="summaryTime">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Tarief</span>
+          <span class="value" id="summaryRate">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Aantal uur</span>
+          <span class="value" id="summaryHours">—</span>
+        </div>
+        <div class="summary-row total">
+          <span class="label" style="font-weight:600; color:var(--text);">Totaal</span>
+          <span class="value" id="summaryTotal">€0,—</span>
+        </div>
+      </div>
+
+      <div style="padding: 16px 0 0;">
+        <label class="checkbox-field">
+          <input type="checkbox" id="termsAccept" name="termsAccept" required>
+          <span class="checkbox-text">
+            Ik accepteer dat ik de <strong>DJI OSMO Pocket 3</strong> in goede staat terugbreng bij de balie van Kick'n Danschool. 
+            Bij schade of verlies neem ik de <strong>volledige kosten</strong> voor reparatie of vervanging op eigen rekening.
+          </span>
+        </label>
+        <div class="error-text" id="termsError" style="margin-left: 34px;">Je moet de voorwaarden accepteren</div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>
+        Betaal via iDEAL →
+      </button>
+      <p style="text-align:center; font-size:12px; color:var(--text-dim); margin-top:10px;">
+        Veilig betalen via Stripe · Na betaling wordt je tijdslot gereserveerd
+      </p>
+    </div>
+  </form>
+
+  <div class="footer">
+    <p>© 2026 Kick'n Danschool · DJI OSMO Pocket 3 Verhuurservice</p>
+  </div>
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">✓</div>
+    <h2>Reservering gelukt!</h2>
+    <p>Je wordt doorgestuurd naar iDEAL om te betalen.<br>Na betaling ontvang je een bevestiging per e-mail en wordt je tijdslot in de agenda gereserveerd.</p>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // CONFIGURATIE — Vul hier je gegevens in
+  // ============================================================
+  const CONFIG = {
+    // Je Google Calendar ID (te vinden in agenda-instellingen)
+    GOOGLE_CALENDAR_ID: 'd4f70b8ee4bde2b0c9237b6139194fff3fe24ec0ce140c2d53f12bd061ef85dc@group.calendar.google.com',
+
+    PRICE_DOCENT: 10,
+    PRICE_LEERLING: 15,
+  };
+
+  // ============================================================
+  // CALENDAR SETUP
+  // ============================================================
+  function initCalendar() {
+    if (CONFIG.GOOGLE_CALENDAR_ID !== 'JOUW_GOOGLE_AGENDA_ID_HIER') {
+      const iframe = document.getElementById('calendarIframe');
+      const encodedId = encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID);
+      iframe.src = `https://calendar.google.com/calendar/embed?src=${encodedId}&mode=WEEK&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&bgcolor=%230a0a0f&color=%23ff6b35`;
+      iframe.style.display = 'block';
+
+      const link = document.getElementById('calendarLink');
+      link.href = `https://calendar.google.com/calendar/embed?src=${encodedId}`;
+    }
+  }
+
+  // ============================================================
+  // FORM LOGIC
+  // ============================================================
+  const form = document.getElementById('rentalForm');
+  const roleInputs = document.querySelectorAll('input[name="role"]');
+  const hoursSelect = document.getElementById('hours');
+  const startTimeSelect = document.getElementById('startTime');
+  const bookingDate = document.getElementById('bookingDate');
+  const termsCheckbox = document.getElementById('termsAccept');
+  const submitBtn = document.getElementById('submitBtn');
+  const summaryCard = document.getElementById('summaryCard');
+
+  // Set minimum date to today
+  const today = new Date().toISOString().split('T')[0];
+  bookingDate.min = today;
+
+  function getSelectedRole() {
+    const checked = document.querySelector('input[name="role"]:checked');
+    return checked ? checked.value : null;
+  }
+
+  function getPrice() {
+    const role = getSelectedRole();
+    if (!role) return 0;
+    return role === 'docent' ? CONFIG.PRICE_DOCENT : CONFIG.PRICE_LEERLING;
+  }
+
+  function updateSummary() {
+    const role = getSelectedRole();
+    const hours = parseInt(hoursSelect.value) || 0;
+    const date = bookingDate.value;
+    const start = startTimeSelect.value;
+    const price = getPrice();
+    const total = price * hours;
+
+    if (role && hours) {
+      summaryCard.style.display = 'block';
+      document.getElementById('summaryRole').textContent = role === 'docent' ? 'Docent' : 'Leerling';
+      document.getElementById('summaryRate').textContent = `€${price},— /uur`;
+      document.getElementById('summaryHours').textContent = `${hours} uur`;
+      document.getElementById('summaryTotal').textContent = `€${total},—`;
+
+      if (date) {
+        const d = new Date(date + 'T00:00:00');
+        document.getElementById('summaryDate').textContent = d.toLocaleDateString('nl-NL', {
+          weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+        });
+      } else {
+        document.getElementById('summaryDate').textContent = '—';
+      }
+
+      if (start && hours) {
+        const [h, m] = start.split(':').map(Number);
+        const endH = h + hours;
+        document.getElementById('summaryTime').textContent = `${start} — ${String(endH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      } else {
+        document.getElementById('summaryTime').textContent = '—';
+      }
+
+      submitBtn.textContent = `Betaal €${total},— via iDEAL →`;
+    } else {
+      summaryCard.style.display = 'none';
+      submitBtn.textContent = 'Betaal via iDEAL →';
+    }
+
+    checkFormValidity();
+  }
+
+  function checkFormValidity() {
+    const name = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const role = getSelectedRole();
+    const date = bookingDate.value;
+    const start = startTimeSelect.value;
+    const hours = hoursSelect.value;
+    const terms = termsCheckbox.checked;
+
+    submitBtn.disabled = !(name && email && role && date && start && hours && terms);
+  }
+
+  // Event listeners
+  roleInputs.forEach(r => r.addEventListener('change', updateSummary));
+  hoursSelect.addEventListener('change', updateSummary);
+  startTimeSelect.addEventListener('change', updateSummary);
+  bookingDate.addEventListener('change', updateSummary);
+  termsCheckbox.addEventListener('change', checkFormValidity);
+
+  document.getElementById('fullName').addEventListener('input', checkFormValidity);
+  document.getElementById('email').addEventListener('input', checkFormValidity);
+
+  // Form submission
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const role = getSelectedRole();
+    const hours = parseInt(hoursSelect.value);
+    const total = getPrice() * hours;
+    const name = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const date = bookingDate.value;
+    const start = startTimeSelect.value;
+
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Bezig met laden...';
+
+    try {
+      // Call Netlify Function to create Stripe Checkout Session
+      const response = await fetch('/.netlify/functions/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          role,
+          date,
+          startTime: start,
+          hours: parseInt(hours),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Er ging iets mis bij het aanmaken van de betaling.');
+      }
+
+      // Show success state briefly, then redirect to Stripe Checkout
+      document.getElementById('successOverlay').classList.add('visible');
+
+      setTimeout(() => {
+        window.location.href = result.url;
+      }, 1500);
+
+    } catch (error) {
+      alert('Fout: ' + error.message);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Betaal via iDEAL →';
+    }
+  });
+
+  // Check for success/cancel return from Stripe
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    document.getElementById('successOverlay').classList.add('visible');
+    const successMsg = document.querySelector('#successOverlay h2');
+    successMsg.textContent = '✅ Betaling gelukt!';
+    const successP = document.querySelector('#successOverlay p');
+    successP.innerHTML = 'Je reservering is bevestigd.<br>Je ontvangt een bevestiging per e-mail.';
+  }
+
+  // Init
+  initCalendar();
+  checkFormValidity();
+</script>
+
+</body>
+</html>
