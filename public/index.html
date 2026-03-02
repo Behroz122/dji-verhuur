@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJI OSMO Pocket 3 Verhuur — Kick'n Danschool</title>
+<title>DJI OSMO Pocket 3 Verhuur - Kick'n Danschool</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -633,7 +633,7 @@
           <div class="role-card">
             <span class="role-icon">🎓</span>
             <span class="role-label">Docent</span>
-            <span class="role-price">€10,— per uur</span>
+            <span class="role-price">€10,- per uur</span>
           </div>
         </label>
         <label class="role-option">
@@ -641,7 +641,7 @@
           <div class="role-card">
             <span class="role-icon">💃</span>
             <span class="role-label">Leerling</span>
-            <span class="role-price">€15,— per uur</span>
+            <span class="role-price">€15,- per uur</span>
           </div>
         </label>
       </div>
@@ -662,8 +662,8 @@
       <div class="calendar-wrapper">
         <div class="calendar-placeholder" id="calendarArea">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-          <p><strong>Google Agenda — Beschikbaarheid</strong></p>
-          <p style="font-size:12px; margin-bottom: 12px;">Hier wordt de agenda ingeladen zodra je de agenda-ID instelt.<br>Rode blokken = al gereserveerd.</p>
+          <p><strong>Google Agenda - Beschikbaarheid</strong></p>
+          <p style="font-size:12px; margin-bottom: 12px;">Oranje blokken = al gereserveerd.</p>
           <!-- INSTRUCTIE: Vervang JOUW_AGENDA_ID hieronder met je echte Google Calendar ID -->
           <iframe id="calendarIframe" src="" width="100%" height="400" frameborder="0" style="display:none; border-radius: 8px;"></iframe>
           <a href="#" id="calendarLink" target="_blank">↗ Open agenda in nieuw venster</a>
@@ -719,27 +719,27 @@
       <div class="summary-card" id="summaryCard" style="display:none;">
         <div class="summary-row">
           <span class="label">Rol</span>
-          <span class="value" id="summaryRole">—</span>
+          <span class="value" id="summaryRole">-</span>
         </div>
         <div class="summary-row">
           <span class="label">Datum</span>
-          <span class="value" id="summaryDate">—</span>
+          <span class="value" id="summaryDate">-</span>
         </div>
         <div class="summary-row">
           <span class="label">Tijd</span>
-          <span class="value" id="summaryTime">—</span>
+          <span class="value" id="summaryTime">-</span>
         </div>
         <div class="summary-row">
           <span class="label">Tarief</span>
-          <span class="value" id="summaryRate">—</span>
+          <span class="value" id="summaryRate">-</span>
         </div>
         <div class="summary-row">
           <span class="label">Aantal uur</span>
-          <span class="value" id="summaryHours">—</span>
+          <span class="value" id="summaryHours">-</span>
         </div>
         <div class="summary-row total">
           <span class="label" style="font-weight:600; color:var(--text);">Totaal</span>
-          <span class="value" id="summaryTotal">€0,—</span>
+          <span class="value" id="summaryTotal">€0,-</span>
         </div>
       </div>
 
@@ -779,7 +779,7 @@
 
 <script>
   // ============================================================
-  // CONFIGURATIE — Vul hier je gegevens in
+  // CONFIGURATIE - Vul hier je gegevens in
   // ============================================================
   const CONFIG = {
     // Je Google Calendar ID (te vinden in agenda-instellingen)
@@ -842,9 +842,9 @@
     if (role && hours) {
       summaryCard.style.display = 'block';
       document.getElementById('summaryRole').textContent = role === 'docent' ? 'Docent' : 'Leerling';
-      document.getElementById('summaryRate').textContent = `€${price},— /uur`;
+      document.getElementById('summaryRate').textContent = `€${price},- /uur`;
       document.getElementById('summaryHours').textContent = `${hours} uur`;
-      document.getElementById('summaryTotal').textContent = `€${total},—`;
+      document.getElementById('summaryTotal').textContent = `€${total},-`;
 
       if (date) {
         const d = new Date(date + 'T00:00:00');
@@ -852,18 +852,18 @@
           weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
         });
       } else {
-        document.getElementById('summaryDate').textContent = '—';
+        document.getElementById('summaryDate').textContent = '-';
       }
 
       if (start && hours) {
         const [h, m] = start.split(':').map(Number);
         const endH = h + hours;
-        document.getElementById('summaryTime').textContent = `${start} — ${String(endH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        document.getElementById('summaryTime').textContent = `${start} - ${String(endH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
       } else {
-        document.getElementById('summaryTime').textContent = '—';
+        document.getElementById('summaryTime').textContent = '-';
       }
 
-      submitBtn.textContent = `Betaal €${total},— via iDEAL →`;
+      submitBtn.textContent = `Betaal €${total},- via iDEAL →`;
     } else {
       summaryCard.style.display = 'none';
       submitBtn.textContent = 'Betaal via iDEAL →';
